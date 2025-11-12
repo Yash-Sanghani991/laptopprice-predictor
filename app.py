@@ -4,12 +4,12 @@ import pandas as pd
 import numpy as np
 
 # Load model and data
-pipe = joblib.load('pipe.pkl')
-df = joblib.load('df.pkl')  # Or keep pickle.load if df.pkl is pickled with pickle
+pipe = joblib.load('pipe.pkl')       # Trained pipeline
+df = joblib.load('df.pkl')           # DataFrame with dropdown options
 
 st.title("Laptop Price Predictor")
 
-# Inputs
+# User inputs
 company = st.selectbox('Brand', df['Company'].unique())
 type = st.selectbox('Type', df['TypeName'].unique())
 ram = st.selectbox('RAM(in GB)', [2,4,6,8,12,16,24,32,64])
@@ -33,11 +33,10 @@ if st.button('Predict Price'):
     X_res, Y_res = map(int, resolution.split('x'))
     ppi = ((X_res**2) + (Y_res**2))**0.5 / screen_size
 
-    # Prepare DataFrame
+    # Prepare input DataFrame
     query = pd.DataFrame([[company,type,ram,weight,touchscreen,ips,ppi,cpu,hdd,ssd,gpu,os]],
                          columns=['Company','TypeName','Ram','Weight','Touchscreen','Ips','Ppi','Cpu brand','HDD','SSD','Gpu brand','os'])
 
+    # Predict price
     price = pipe.predict(query)[0]
     st.title("The predicted price of this configuration is " + str(int(np.exp(price))))
-
-
