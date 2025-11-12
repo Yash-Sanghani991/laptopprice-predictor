@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Book</title>
+
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Book</title>
+    <!-- Internal CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+</head>
+<body>
+    <h1>Contact Book</h1>
+    <a href="{{ url_for('add_contact') }}">Add Contact</a>
+    <ul>
+        {% for name, phone in contacts.items() %}
+            <li>{{ name }} - {{ phone }}
+                <a href="{{ url_for('view_contact', name=name) }}">View</a>
+                <a href="{{ url_for('delete_contact', name=name) }}">Delete</a>
+            </li>
+        {% else %}
+            <li>No contacts found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
